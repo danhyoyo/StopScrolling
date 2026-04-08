@@ -114,8 +114,9 @@
     styleTag.textContent = `
       html.stop-scrolling-locked,
       body.stop-scrolling-locked {
-        overflow: hidden !important;
         overscroll-behavior: none !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
       }
 
       html.stop-scrolling-locked::-webkit-scrollbar,

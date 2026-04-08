@@ -18,11 +18,20 @@
       `
     },
     instagram: {
-      navLabel: "Reels",
+      navLabel: "Instagram",
       icon: `
         <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="1" y="1" width="22" height="22" rx="7" fill="#4B7CF6"></rect>
-          <path d="M8 6.8h8l-2.1 2.5H6.1L8 6.8Zm8.8 0H19l-2.1 2.5h-2.3l2.2-2.5ZM6 10.6h12v6.6c0 1-.8 1.8-1.8 1.8H7.8c-1 0-1.8-.8-1.8-1.8v-6.6Zm4.3 1.5v5.4l4.5-2.7-4.5-2.7Z" fill="#FFF"></path>
+          <defs>
+            <linearGradient id="instagramGradient" x1="4" y1="20" x2="20" y2="4" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#FEC053"></stop>
+              <stop offset="0.45" stop-color="#F2203E"></stop>
+              <stop offset="1" stop-color="#B729A8"></stop>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#instagramGradient)"></rect>
+          <rect x="7" y="7" width="10" height="10" rx="3.2" fill="none" stroke="#FFF" stroke-width="1.8"></rect>
+          <circle cx="12" cy="12" r="2.6" fill="none" stroke="#FFF" stroke-width="1.8"></circle>
+          <circle cx="17.2" cy="6.8" r="1.2" fill="#FFF"></circle>
         </svg>
       `
     },
@@ -52,6 +61,8 @@
   const siteListElement = document.getElementById("siteList");
   const detailPanelElement = document.getElementById("detailPanel");
   const panelTitleElement = document.getElementById("panelTitle");
+  const remainingCountElement = document.getElementById("remainingCount");
+  const remainingLabelElement = document.getElementById("remainingLabel");
   const activeSummaryElement = document.getElementById("activeSummary");
   const usageCountElement = document.getElementById("usageCount");
   const limitRangeElement = document.getElementById("limitRange");
@@ -117,6 +128,7 @@
     const site = SITE_META[selectedSite];
     const settings = state.siteSettings[selectedSite];
     const usage = state.usage.sites[selectedSite];
+    const remaining = Math.max(settings.limit - usage.count, 0);
     const progressPercent = Math.min(
       100,
       Math.round((usage.count / Math.max(settings.limit, 1)) * 100)
@@ -124,6 +136,10 @@
 
     detailPanelElement.style.setProperty("--site-accent", site.accent);
     panelTitleElement.textContent = site.label;
+    remainingCountElement.textContent = String(remaining);
+    remainingLabelElement.textContent = settings.enabled
+      ? "scrolls left today"
+      : "scrolls available when enabled";
     activeSummaryElement.textContent = settings.enabled
       ? `${usage.count}/${settings.limit} scrolls used today on ${site.label}.`
       : `${site.label} is paused. Toggle it on to continue counting.`;

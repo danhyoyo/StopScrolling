@@ -248,6 +248,32 @@ body {
   line-height: 1;
 }
 
+.remaining-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(45, 154, 95, 0.14));
+}
+
+.remaining-value {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.remaining-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .detail-copy {
   margin: 10px 0 0;
   color: var(--muted);
