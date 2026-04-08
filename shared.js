@@ -6,19 +6,19 @@ const StopScrollingShared = (() => {
       label: "Facebook",
       domain: "facebook.com",
       accent: "#1877f2",
-      description: "News Feed, Reels va bai viet ngan"
+      description: "News Feed, Reels, and short posts"
     },
     instagram: {
       label: "Instagram",
       domain: "instagram.com",
       accent: "#ff5c8a",
-      description: "Feed, Reels va Explore"
+      description: "Feed, Reels, and Explore"
     },
     tiktok: {
       label: "TikTok",
       domain: "tiktok.com",
       accent: "#111111",
-      description: "For You, Following va video ngan"
+      description: "For You, Following, and short videos"
     }
   };
 

@@ -246,7 +246,7 @@
       syncScrollLock();
       blockWheel(event);
       showToast(
-        `Da het ${settings.limit} luot scroll hom nay tren ${SITE_META[siteKey].label}.`,
+        `You have reached today's ${settings.limit}-scroll limit on ${SITE_META[siteKey].label}.`,
         "danger"
       );
       return;
@@ -273,11 +273,11 @@
 
     if (settings.limit - nextCount === 0) {
       showToast(
-        `Ban vua dung het gioi han ${settings.limit} luot tren ${SITE_META[siteKey].label}.`
+        `You just used your full ${settings.limit}-scroll limit on ${SITE_META[siteKey].label}.`
       );
     } else if (settings.limit - nextCount <= 3) {
       showToast(
-        `Con ${settings.limit - nextCount} luot scroll tren ${SITE_META[siteKey].label}.`
+        `${settings.limit - nextCount} scrolls remaining on ${SITE_META[siteKey].label}.`
       );
     }
 

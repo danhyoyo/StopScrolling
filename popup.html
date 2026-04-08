@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,14 +25,13 @@
 
         <section class="detail-panel" id="detailPanel">
           <header class="detail-top">
-            <p class="detail-kicker" id="panelSubtitle">Platform Settings</p>
             <h1 class="detail-title" id="panelTitle">Facebook</h1>
-            <p class="detail-copy" id="activeSummary">Dang tai...</p>
+            <p class="detail-copy" id="activeSummary">Loading...</p>
           </header>
 
           <section class="setting-block">
             <div class="setting-head">
-              <label class="setting-label" for="limitRange">Number of Scrolls to Display</label>
+              <label class="setting-label" for="limitRange">Number of Scrolls</label>
               <input
                 class="limit-pill-input"
                 id="limitNumber"
@@ -54,39 +53,12 @@
 
             <div class="usage-row">
               <span class="usage-copy" id="usageCount">0 / 0 scrolls used today</span>
-              <button class="text-button" id="resetSiteButton" type="button">Reset selected</button>
             </div>
 
             <div class="progress-track">
               <div class="progress-fill" id="progressFill"></div>
             </div>
           </section>
-
-          <section class="setting-block">
-            <p class="setting-section-title">Scrolling Limit Reset Frequency</p>
-
-            <div class="frequency-grid">
-              <button class="frequency-button" disabled type="button">10 scroll per refresh</button>
-              <button class="frequency-button is-active" type="button">10 scroll per day</button>
-              <button class="frequency-button" disabled type="button">10 scroll per week</button>
-              <button class="frequency-button frequency-button--days" disabled type="button">
-                <span>10 scroll per</span>
-                <span class="days-pill">Days</span>
-              </button>
-            </div>
-
-            <p class="setting-note">
-              Hien tai extension reset usage moi ngay. Cac tuy chinh khac se them sau.
-            </p>
-          </section>
-
-          <div class="detail-actions">
-            <button class="primary-button" id="resetAllButton" type="button">Reset all today</button>
-          </div>
-
-          <p class="status-text" id="statusText">
-            Mo Facebook, Instagram hoac TikTok roi scroll de bat dau dem.
-          </p>
         </section>
       </section>
     </main>

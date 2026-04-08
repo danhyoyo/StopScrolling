@@ -10,7 +10,6 @@
   const NAV_META = {
     facebook: {
       navLabel: "FB",
-      subtitle: "News Feed, reels va bai viet ngan",
       icon: `
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="12" fill="#1877F2"></circle>
@@ -20,7 +19,6 @@
     },
     instagram: {
       navLabel: "Reels",
-      subtitle: "Instagram reels, feed va explore",
       icon: `
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <rect x="1" y="1" width="22" height="22" rx="7" fill="#4B7CF6"></rect>
@@ -30,7 +28,6 @@
     },
     tiktok: {
       navLabel: "TikTok",
-      subtitle: "For You, Following va video ngan",
       icon: `
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="12" fill="#000"></circle>
@@ -55,15 +52,11 @@
   const siteListElement = document.getElementById("siteList");
   const detailPanelElement = document.getElementById("detailPanel");
   const panelTitleElement = document.getElementById("panelTitle");
-  const panelSubtitleElement = document.getElementById("panelSubtitle");
   const activeSummaryElement = document.getElementById("activeSummary");
   const usageCountElement = document.getElementById("usageCount");
-  const statusTextElement = document.getElementById("statusText");
   const limitRangeElement = document.getElementById("limitRange");
   const limitNumberElement = document.getElementById("limitNumber");
   const progressFillElement = document.getElementById("progressFill");
-  const resetSiteButton = document.getElementById("resetSiteButton");
-  const resetAllButton = document.getElementById("resetAllButton");
 
   let state = null;
   let selectedSite = SITE_ORDER[0];
@@ -82,7 +75,7 @@
       </button>
 
       <label class="switch">
-        <input class="toggle-input" data-role="toggle" type="checkbox" aria-label="Bat tat ${site.label}">
+        <input class="toggle-input" data-role="toggle" type="checkbox" aria-label="Enable or disable ${site.label}">
         <span class="switch-slider"></span>
       </label>
     `;
@@ -122,7 +115,6 @@
 
   function renderSelectedSite() {
     const site = SITE_META[selectedSite];
-    const navMeta = NAV_META[selectedSite];
     const settings = state.siteSettings[selectedSite];
     const usage = state.usage.sites[selectedSite];
     const progressPercent = Math.min(
@@ -132,7 +124,6 @@
 
     detailPanelElement.style.setProperty("--site-accent", site.accent);
     panelTitleElement.textContent = site.label;
-    panelSubtitleElement.textContent = navMeta.subtitle;
     activeSummaryElement.textContent = settings.enabled
       ? `${usage.count}/${settings.limit} scrolls used today on ${site.label}.`
       : `${site.label} is paused. Toggle it on to continue counting.`;
@@ -142,22 +133,13 @@
 
     limitRangeElement.disabled = !settings.enabled;
     limitNumberElement.disabled = !settings.enabled;
-    resetSiteButton.disabled = usage.count === 0;
   }
 
   function applyState(nextState) {
     state = normalizeState(nextState);
-    const totalUsed = SITE_ORDER.reduce(
-      (sum, siteKey) => sum + state.usage.sites[siteKey].count,
-      0
-    );
-    const activeSites = SITE_ORDER.filter((siteKey) => state.siteSettings[siteKey].enabled);
-
     if (!SITE_ORDER.includes(selectedSite)) {
       selectedSite = SITE_ORDER[0];
     }
-
-    statusTextElement.textContent = `Hom nay da dung ${totalUsed} luot scroll tren ${activeSites.length} platform dang bat.`;
 
     for (const siteKey of SITE_ORDER) {
       const row = siteListElement.querySelector(`[data-site-key="${siteKey}"]`);
@@ -186,7 +168,7 @@
   async function sendRequest(message) {
     const response = await chrome.runtime.sendMessage(message);
     if (!response?.ok || !response.state) {
-      throw new Error(response?.error || "Khong the cap nhat trang thai.");
+      throw new Error(response?.error || "Failed to update state.");
     }
 
     applyState(response.state);
@@ -196,8 +178,8 @@
     try {
       await sendRequest(message);
     } catch (_error) {
-      statusTextElement.textContent =
-        "Khong the dong bo trang thai. Thu dong popup hoac tai lai extension.";
+      activeSummaryElement.textContent =
+        "Could not sync state. Reopen the popup or reload the extension.";
     }
   }
 
@@ -269,19 +251,6 @@
 
   limitNumberElement.addEventListener("change", () => {
     commitLimit(limitNumberElement.value);
-  });
-
-  resetSiteButton.addEventListener("click", () => {
-    void safeRequest({
-      type: "reset-site-usage",
-      siteKey: selectedSite
-    });
-  });
-
-  resetAllButton.addEventListener("click", () => {
-    void safeRequest({
-      type: "reset-all-usage"
-    });
   });
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
