@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Stop Scrolling",
+  "description": "Limit scroll counts on Facebook, Instagram, and TikTok.",
+  "version": "1.0.0",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Stop Scrolling",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://facebook.com/*",
+        "*://*.facebook.com/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*",
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*"
+      ],
+      "js": [
+        "shared.js",
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

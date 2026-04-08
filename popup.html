@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Scrolling</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="control-board">
+        <aside class="platform-rail">
+          <div class="brand-block">
+            <p class="brand-mini">Stop Scrolling</p>
+            <p class="brand-copy">Set a post limit for each platform you want to slow down.</p>
+          </div>
+
+          <nav class="platform-list" id="siteList" aria-label="Platforms"></nav>
+
+          <div class="support-pill" aria-hidden="true">
+            <span class="support-icon">cup</span>
+            <span>if you'd like to support</span>
+          </div>
+        </aside>
+
+        <section class="detail-panel" id="detailPanel">
+          <header class="detail-top">
+            <p class="detail-kicker" id="panelSubtitle">Platform Settings</p>
+            <h1 class="detail-title" id="panelTitle">Facebook</h1>
+            <p class="detail-copy" id="activeSummary">Dang tai...</p>
+          </header>
+
+          <section class="setting-block">
+            <div class="setting-head">
+              <label class="setting-label" for="limitRange">Number of Posts to Display</label>
+              <input
+                class="limit-pill-input"
+                id="limitNumber"
+                min="1"
+                max="500"
+                step="1"
+                type="number"
+              >
+            </div>
+
+            <input
+              class="limit-range"
+              id="limitRange"
+              min="1"
+              max="500"
+              step="1"
+              type="range"
+            >
+
+            <div class="usage-row">
+              <span class="usage-copy" id="usageCount">0 / 0 posts used today</span>
+              <button class="text-button" id="resetSiteButton" type="button">Reset selected</button>
+            </div>
+
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </section>
+
+          <section class="setting-block">
+            <p class="setting-section-title">Post Limit Reset Frequency</p>
+
+            <div class="frequency-grid">
+              <button class="frequency-button" disabled type="button">10 post per refresh</button>
+              <button class="frequency-button is-active" type="button">10 post per day</button>
+              <button class="frequency-button" disabled type="button">10 post per week</button>
+              <button class="frequency-button frequency-button--days" disabled type="button">
+                <span>10 post per</span>
+                <span class="days-pill">Days</span>
+              </button>
+            </div>
+
+            <p class="setting-note">
+              Hien tai extension reset usage moi ngay. Cac tuy chinh khac se them sau.
+            </p>
+          </section>
+
+          <div class="detail-actions">
+            <button class="primary-button" id="resetAllButton" type="button">Reset all today</button>
+          </div>
+
+          <p class="status-text" id="statusText">
+            Mo Facebook, Instagram hoac TikTok roi scroll de bat dau dem.
+          </p>
+        </section>
+      </section>
+    </main>
+
+    <script src="shared.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
