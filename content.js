@@ -25,7 +25,71 @@
 
   function applyState(nextState) {
     state = normalizeState(nextState);
+    renderFloatingCounter();
     syncScrollLock();
+  }
+
+  function ensureFloatingCounter() {
+    let counter = document.getElementById("stop-scrolling-counter");
+    if (counter) {
+      return counter;
+    }
+
+    counter = document.createElement("div");
+    counter.id = "stop-scrolling-counter";
+    counter.style.position = "fixed";
+    counter.style.right = "74px";
+    counter.style.bottom = "16px";
+    counter.style.zIndex = "2147483646";
+    counter.style.maxWidth = "320px";
+    counter.style.padding = "12px 16px";
+    counter.style.borderRadius = "16px";
+    counter.style.fontFamily =
+      "\"Segoe UI Variable\", \"Segoe UI\", sans-serif";
+    counter.style.fontSize = "14px";
+    counter.style.fontWeight = "700";
+    counter.style.lineHeight = "1.4";
+    counter.style.color = "#ffffff";
+    counter.style.boxShadow = "0 12px 30px rgba(0, 0, 0, 0.26)";
+    counter.style.transition =
+      "opacity 140ms ease, transform 140ms ease, background 140ms ease";
+    counter.style.opacity = "0";
+    counter.style.transform = "translateY(8px)";
+    counter.style.pointerEvents = "none";
+    document.documentElement.appendChild(counter);
+    return counter;
+  }
+
+  function renderFloatingCounter() {
+    const counter = ensureFloatingCounter();
+    const siteState = getSiteState();
+
+    if (!siteState) {
+      counter.style.opacity = "0";
+      counter.style.transform = "translateY(8px)";
+      return;
+    }
+
+    const { settings, usage } = siteState;
+    const remaining = Math.max(settings.limit - usage.count, 0);
+    const scrollLabel = remaining === 1 ? "scroll" : "scrolls";
+
+    if (!settings.enabled) {
+      counter.textContent = `Stop Scrolling is paused on ${SITE_META[siteKey].label}.`;
+      counter.style.background = "rgba(62, 62, 77, 0.94)";
+    } else if (remaining === 0) {
+      counter.textContent = `0 scrolls remaining on ${SITE_META[siteKey].label}.`;
+      counter.style.background = "rgba(23, 23, 23, 0.94)";
+    } else if (remaining <= 3) {
+      counter.textContent = `${remaining} ${scrollLabel} remaining on ${SITE_META[siteKey].label}.`;
+      counter.style.background = "rgba(190, 88, 24, 0.96)";
+    } else {
+      counter.textContent = `${remaining} ${scrollLabel} remaining on ${SITE_META[siteKey].label}.`;
+      counter.style.background = "rgba(36, 87, 242, 0.94)";
+    }
+
+    counter.style.opacity = "1";
+    counter.style.transform = "translateY(0)";
   }
 
   function showToast(message, tone = "info") {
@@ -35,7 +99,7 @@
       toast.id = "stop-scrolling-toast";
       toast.style.position = "fixed";
       toast.style.right = "16px";
-      toast.style.bottom = "16px";
+      toast.style.bottom = "76px";
       toast.style.zIndex = "2147483647";
       toast.style.maxWidth = "320px";
       toast.style.padding = "12px 14px";
@@ -270,15 +334,12 @@
         }
       }
     };
+    renderFloatingCounter();
     syncScrollLock();
 
     if (settings.limit - nextCount === 0) {
       showToast(
         `You just used your full ${settings.limit}-scroll limit on ${SITE_META[siteKey].label}.`
-      );
-    } else if (settings.limit - nextCount <= 3) {
-      showToast(
-        `${settings.limit - nextCount} scrolls remaining on ${SITE_META[siteKey].label}.`
       );
     }
 
