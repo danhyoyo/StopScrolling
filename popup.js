@@ -141,9 +141,9 @@
       ? "scrolls left today"
       : "scrolls available when enabled";
     activeSummaryElement.textContent = settings.enabled
-      ? `${usage.count}/${settings.limit} scrolls used today on ${site.label}.`
+      ? `${remaining} scrolls left today on ${site.label}.`
       : `${site.label} is paused. Toggle it on to continue counting.`;
-    usageCountElement.textContent = `${usage.count} / ${settings.limit} scrolls used today`;
+    usageCountElement.textContent = `${usage.count} used / ${remaining} left today`;
     progressFillElement.style.width = `${progressPercent}%`;
     syncLimitInputs(settings.limit);
 
