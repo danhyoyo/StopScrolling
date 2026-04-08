@@ -134,9 +134,9 @@
     panelTitleElement.textContent = site.label;
     panelSubtitleElement.textContent = navMeta.subtitle;
     activeSummaryElement.textContent = settings.enabled
-      ? `${usage.count}/${settings.limit} posts used today on ${site.label}.`
+      ? `${usage.count}/${settings.limit} scrolls used today on ${site.label}.`
       : `${site.label} is paused. Toggle it on to continue counting.`;
-    usageCountElement.textContent = `${usage.count} / ${settings.limit} posts used today`;
+    usageCountElement.textContent = `${usage.count} / ${settings.limit} scrolls used today`;
     progressFillElement.style.width = `${progressPercent}%`;
     syncLimitInputs(settings.limit);
 
